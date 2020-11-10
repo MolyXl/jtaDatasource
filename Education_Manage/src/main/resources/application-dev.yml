@@ -1,0 +1,97 @@
+server:
+  port: 8181
+  servlet:
+    session:
+      timeout: 30 
+logging:
+  file:
+    name: framework.log
+spring:
+  jta:
+    log-dir: ./transaction-log/manage
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  datasource:
+    education:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.47.108:3306/edudata?characterEncoding=UTF-8&useSSL=false
+      username: root
+      password: 123456
+    liverecStream:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.54.117:3306/liverec?characterEncoding=UTF-8&useSSL=false
+      username: root
+      password: mysql
+  session:
+    store-type: redis
+    redis:
+      flush-mode: on_save
+      namespace: spring:session
+  redis:
+    #host: 192.168.10.42
+    host: 127.0.0.1
+    port: 6379
+    #password: 123456
+    lettuce:
+      pool:
+        max-active: 10
+        max-wait: -1ms # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        min-idle: 0
+        max-idle: 10
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: false
+swagger2:
+  enable: false
+cors:
+  mapping: /**
+  allowed-origins: '*'
+  allow-credentials: true
+  allowed-headers: '*'
+  maxage: 3600
+business-exception:
+  code: 601
+
+
+
+meeting:
+  bashUrl: http://192.168.54.117:8881
+  superid: 5eba33ddccc5625d6b550a40
+  superkey: 18825
+  token: token
+  services: query/services
+  createService: create/services
+  deleteService: delete/services/{serviceId}
+  queryUserByRoom: query/{roomId}/users/{username}
+  deleteUser: delete/{roomId}/users/{username}
+  queryOneService: query/services/{serviceId}
+  createRooms: create/rooms
+  deleteRoom: delete/rooms/{roomId}
+  updateRoom: update/rooms/{roomId}
+  patchRoom: patch/rooms/{roomId}
+  queryAllRooms: query/rooms
+  queryOneRoom: query/rooms/{roomId}
+  queryAllUserByRoom: query/{roomId}/users
+  queryAllControllers: query/controllers
+  queryOneController: query/controllers/{controllerId}
+
+live:
+  # ip
+  ip: 192.168.54.117
+  # api端口
+  apiPort: 1985
+  # 流端口
+  sourcePort: 19350
+  #点播端口
+  mediaPort: 1880
+  #推流地址
+  streamUrl: rtmp://${live.ip}:${live.sourcePort}/{sourceName}/{streamName}
+  #录制接口
+  recordStream: api/v1/raw?rpc=update&scope=hls_rec&value=__defaultVhost__&param={param}&data={data}
+
+
+
+
